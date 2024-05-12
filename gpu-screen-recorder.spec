@@ -34,6 +34,7 @@ BuildRequires:  pulseaudio-libs-devel
 BuildRequires:  ffmpeg-libs
 BuildRequires:  libva-devel
 BuildRequires:  libcap-devel
+BuildRequires: libdrm
 BuildRequires:  libdrm-devel
 BuildRequires:  wayland-devel
 BuildRequires:  pkgconfig(xdamage)
