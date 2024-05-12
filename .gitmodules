@@ -1,0 +1,6 @@
+[submodule "gpu-screen-recorder"]
+	path = gpu-screen-recorder
+	url = https://repo.dec05eba.com/gpu-screen-recorder
+[submodule "gpu-screen-recorder-gtk"]
+	path = gpu-screen-recorder-gtk
+	url = https://repo.dec05eba.com/gpu-screen-recorder-gtk
