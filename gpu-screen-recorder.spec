@@ -12,10 +12,6 @@ URL:            https://git.dec05eba.com/%{name}
 
 Source:         https://dec05eba.com/snapshot/%{name}.git.%{snapshot}.tar.gz
 
-
-%description
-%{name} is a shadowplay-like screen recorder for Linux. It is the fastest screen recorder for Linux.
-
 BuildRequires:  pkgconfig(libva)
 BuildRequires:  pkgconfig(libdrm)
 BuildRequires:  pkgconfig(libva-drm)
@@ -40,7 +36,12 @@ BuildRequires:  pkgconfig(x11)
 #BuildRequires: libxnvctrl             
 BuildRequires: mesa-libGL-devel         
 BuildRequires: libva-intel-driver       
-BuildRequires: intel-media-driver     
+BuildRequires: intel-media-driver    
+
+
+%description
+%{name} is a shadowplay-like screen recorder for Linux. It is the fastest screen recorder for Linux.
+ 
 
 %prep
 %autosetup -c

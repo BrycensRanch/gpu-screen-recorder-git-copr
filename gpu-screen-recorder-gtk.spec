@@ -9,9 +9,6 @@ License:        GPL-3.0-or-later
 Source:         https://dec05eba.com/snapshot/%{name}.git.%{snapshot}.tar.gz
 URL:            https://git.dec05eba.com/%{name}
 
-%description
-%{name} is a shadowplay-like screen recorder for Linux. It is the fastest screen recorder for Linux.
-
 BuildRequires:  bash
 BuildRequires:  git
 BuildRequires:  cmake
@@ -64,6 +61,9 @@ BuildRequires: mesa-libGL-devel
 BuildRequires: libva-intel-driver       
 BuildRequires: intel-media-driver     
 Requires: gpu-screen-recorder
+
+%description
+%{name} is a shadowplay-like screen recorder for Linux. It is the fastest screen recorder for Linux.
 
 %prep
 %autosetup -c
