@@ -54,20 +54,16 @@ BuildRequires: gcc-c++
 BuildRequires: pkgconfig
 BuildRequires: make
 BuildRequires: ffmpeg-devel
-BuildRequires: libX11-devel
-BuildRequires: libXcomposite-devel
-BuildRequires: libXrandr-devel
-BuildRequires: libXfixes-devel
-BuildRequires: pulseaudio-libs-devel
-BuildRequires: ffmpeg-libs
-BuildRequires: libva-devel
-BuildRequires: libcap-devel
-BuildRequires: libdrm-devel
-BuildRequires: wayland-devel
+BuildRequires: pkgconfig(x11)
+BuildRequires: pkgconfig(xcomposite)
+BuildRequires: pkgconfig(xrandr)
+BuildRequires: pkgconfig(xfixes)
+BuildRequires: pkconfig(libpulse)
+BuildRequires: pkgconfig(ffmpeg)
+]BuildRequires: pkgconfig(wayland-client)
 # https://i.imgflip.com/1tpd.gif
 #BuildRequires: nvidia-settings
 
-# Additional dependencies found via pkg-config
 BuildRequires: pkgconfig(libavcodec)
 BuildRequires: pkgconfig(libavformat)
 BuildRequires: pkgconfig(libavutil)
