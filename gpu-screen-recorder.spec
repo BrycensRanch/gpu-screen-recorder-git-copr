@@ -20,6 +20,7 @@ BuildArchitectures: x86_64 aarch64
 
 BuildRequires:  pkgconfig(libva)
 BuildRequires:  pkgconfig(libdrm)
+BuildRequires:  pkgconfig(libva-drm)
 BuildRequires:  libdrm-devel
 BuildRequires:  pkgconfig(libcap)
 BuildRequires:  pkgconfig(wayland-client)
