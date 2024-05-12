@@ -1,4 +1,5 @@
 %global snapshot r584.357df7c
+%global debug_package %{nil}
 
 Name:           gpu-screen-recorder
 Version:        %{snapshot}
@@ -13,7 +14,6 @@ Source:         https://dec05eba.com/snapshot/%{name}.git.%{snapshot}.tar.gz
 
 
 BuildArchitectures: x86_64 aarch64
-
 
 %description
 %{name} is a shadowplay-like screen recorder for Linux. It is the fastest screen recorder for Linux.
@@ -88,7 +88,7 @@ BuildRequires: libva-intel-driver
 BuildRequires: intel-media-driver     
 
 %prep
-%setup -q
+%autosetup -c
 
 %build
 ./build.sh
@@ -106,7 +106,7 @@ install -Dm644 "extra/%{name}.service" "%{buildroot}/usr/lib/systemd/user/%{name
 %files
 %license LICENSE
 %doc README.md
-%{_bindir}/%{name}
+%{_bindir}/gpu-screen-recorder
 %{_bindir}/gsr-kms-server
 /usr/lib/systemd/user/%{name}.service
 
