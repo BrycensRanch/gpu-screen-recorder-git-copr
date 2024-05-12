@@ -54,6 +54,7 @@ BuildRequires: libXrandr-devel
 BuildRequires: libXfixes-devel
 BuildRequires: pulseaudio-libs-devel
 BuildRequires: ffmpeg-libs
+BuildRequires: libdrm
 BuildRequires: libva-devel
 BuildRequires: libcap-devel
 BuildRequires: libdrm-devel
