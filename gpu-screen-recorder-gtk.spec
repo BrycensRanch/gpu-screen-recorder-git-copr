@@ -1,22 +1,17 @@
-%global snapshot r584.357df7c
+%global snapshot r269.67a2c39
 
-Name:           gpu-screen-recorder
+Name:           gpu-screen-recorder-gtk
 Version:        %{snapshot}
 Release:        %autorelease
 Summary:        A shadowplay-like screen recorder for Linux. The fastest screen recorder for Linux.
 
 License:        GPL-3.0-or-later
-
 URL:            https://git.dec05eba.com/%{name}
 
-Source:         https://dec05eba.com/snapshot/%{name}.git.%{snapshot}.tar.gz
+Source0:         https://dec05eba.com/snapshot/%{name}.git.%{snapshot}.tar.gz
+Buildroot: %{_tmppath}/%{name}/%{version}
+Buildarch: x86_64
 
-
-BuildArchitectures: x86_64 aarch64
-
-
-%description
-%{name} is a shadowplay-like screen recorder for Linux. It is the fastest screen recorder for Linux.
 
 BuildRequires:  bash
 BuildRequires:  git
@@ -86,20 +81,29 @@ BuildRequires: pkgconfig(wayland-client)
 BuildRequires: mesa-libGL-devel         
 BuildRequires: libva-intel-driver       
 BuildRequires: intel-media-driver     
+Requires: gpu-screen-recorder
 
 %prep
-%setup -q
 
+
+
+%description
+%{name} is a shadowplay-like screen recorder for Linux. It is the fastest screen recorder for Linux.
 %build
+ls
 ./build.sh
 
 # Installation requires root permissions
 %install
 rm -rf $RPM_BUILD_ROOT
 mkdir -p %{buildroot}%{_bindir}
+lsd
+lsd %{buildroot}
 install -Dm755 %{name} %{buildroot}%{_bindir}
-install -Dm755 gsr-kms-server %{buildroot}%{_bindir}
-install -Dm644 "extra/%{name}.service" "%{buildroot}/usr/lib/systemd/user/%{name}.service"
+install -Dm644 "%{name}.desktop" "%{buildroot}/usr/share/applications/com.dec05eba.gpu_screen_recorder.desktop"
+install -Dm644 com.dec05eba.gpu_screen_recorder.appdata.xml "%{buildroot}/usr/share/metainfo/com.dec05eba.gpu_screen_recorder.appdata.xml"
+install -Dm644 icons/hicolor/64x64/apps/com.dec05eba.gpu_screen_recorder.png "%{buildroot}/usr/share/icons/hicolor/64x64/apps/com.dec05eba.gpu_screen_recorder.png"
+install -Dm644 icons/hicolor/128x128/apps/com.dec05eba.gpu_screen_recorder.png "%{buildroot}/usr/share/icons/hicolor/128x128/apps/com.dec05eba.gpu_screen_recorder.png"URL:            https://git.dec05eba.com/gpu-screen-recorder
 
 
 
@@ -107,9 +111,10 @@ install -Dm644 "extra/%{name}.service" "%{buildroot}/usr/lib/systemd/user/%{name
 %license LICENSE
 %doc README.md
 %{_bindir}/%{name}
-%{_bindir}/gsr-kms-server
-/usr/lib/systemd/user/%{name}.service
-
+/usr/share/applications/com.dec05eba.gpu_screen_recorder.desktop
+/usr/share/metainfo/com.dec05eba.gpu_screen_recorder.appdata.xml
+/usr/share/icons/hicolor/64x64/apps/com.dec05eba.gpu_screen_recorder.png
+/usr/share/icons/hicolor/128x128/apps/com.dec05eba.gpu_screen_recorder.png
 
 
 %changelog
