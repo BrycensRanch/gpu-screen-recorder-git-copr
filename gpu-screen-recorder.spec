@@ -13,8 +13,6 @@ URL:            https://git.dec05eba.com/%{name}
 Source:         https://dec05eba.com/snapshot/%{name}.git.%{snapshot}.tar.gz
 
 
-BuildArchitectures: x86_64 aarch64
-
 %description
 %{name} is a shadowplay-like screen recorder for Linux. It is the fastest screen recorder for Linux.
 

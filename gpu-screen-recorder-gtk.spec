@@ -7,7 +7,6 @@ Release:        %autorelease
 Summary:        A shadowplay-like screen recorder for Linux. The fastest screen recorder for Linux.
 License:        GPL-3.0-or-later
 Source:         https://dec05eba.com/snapshot/%{name}.git.%{snapshot}.tar.gz
-BuildArchitectures: x86_64 aarch64
 URL:            https://git.dec05eba.com/%{name}
 
 %description
