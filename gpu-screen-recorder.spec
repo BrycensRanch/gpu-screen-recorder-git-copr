@@ -10,7 +10,6 @@ Summary:        A shadowplay-like screen recorder for Linux. The fastest screen 
 
 License:        GPL-3.0-or-later
 URL:            https://git.dec05eba.com/gpu-screen-recorder
-Source0:        ./gpu-screen-recorder
 
 BuildRequires:  cmake
 BuildRequires:  gcc
@@ -86,9 +85,6 @@ BuildRequires: pkgconfig(wayland-client)
 
 %description
 %{name} is a shadowplay-like screen recorder for Linux. It is the fastest screen recorder for Linux.
-
-%prep
-%autosetup -p1 -a2 -N -n %{name}-%{commit}
 
 %build
 ./build.sh
