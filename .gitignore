@@ -1,0 +1,4 @@
+gpu-screen-recorder-*/
+gpu-screen-recorder-gtk-*/
+*.log
+*.src.rpm
