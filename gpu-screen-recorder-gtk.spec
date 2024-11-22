@@ -9,6 +9,7 @@ Source:         https://dec05eba.com/snapshot/%{name}.git.%{snapshot}.tar.gz
 URL:            https://git.dec05eba.com/%{name}/about
 
 BuildRequires:  gcc
+BuildRequires:  gcc-g++
 BuildRequires:  gtk3-devel
 BuildRequires:  libayatana-appindicator-gtk3-devel  
 Requires:       gpu-screen-recorder

@@ -12,6 +12,8 @@ URL:            https://git.dec05eba.com/%{name}/about
 Source:         https://dec05eba.com/snapshot/%{name}.git.%{snapshot}.tar.gz
 
 BuildRequires:  gcc
+BuildRequires:  gcc-g++
+BuildRequires:  cmake
 BuildRequires:  pkgconfig(libva)
 BuildRequires:  pkgconfig(libdrm)
 BuildRequires:  pkgconfig(libva-drm)
@@ -20,7 +22,7 @@ BuildRequires:  pkgconfig(libcap)
 BuildRequires:  pkgconfig(wayland-client)
 BuildRequires:  pkgconfig(wayland-egl)
 BuildRequires:  pkgconfig(libpulse)
-BuildRequires:  /usr/bin/ffmpeg
+BuildRequires:  (ffmpeg-free-devel or ffmpeg-devel) 
 BuildRequires:  pkgconfig(x11)
 BuildRequires:  meson
 BuildRequires:  pipewire-devel
