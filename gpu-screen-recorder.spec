@@ -32,6 +32,7 @@ BuildRequires:  pkgconfig(xcomposite)
 BuildRequires:  pkgconfig(xrandr)
 BuildRequires:  pkgconfig(xfixes)
 BuildRequires:  meson
+BuildRequires:  pkgconfig(dbus-1)
 BuildRequires:  pipewire-devel
 BuildRequires:  pipewire-libs
 BuildRequires:  libglvnd
