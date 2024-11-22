@@ -24,6 +24,7 @@ BuildRequires:  pkgconfig(wayland-egl)
 BuildRequires:  pkgconfig(libpulse)
 BuildRequires:  (ffmpeg-free-devel or ffmpeg-devel) 
 BuildRequires:  pkgconfig(x11)
+BuildRequires:  pkgconfig(xcomposite)
 BuildRequires:  meson
 BuildRequires:  pipewire-devel
 BuildRequires:  pipewire-libs
