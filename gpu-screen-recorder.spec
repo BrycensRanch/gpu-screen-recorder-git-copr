@@ -1,5 +1,4 @@
 %global snapshot r909.8644c72
-%global debug_package %{nil}
 
 Name:           gpu-screen-recorder
 Version:        %{snapshot}
@@ -8,34 +7,25 @@ Summary:        A shadowplay-like screen recorder for Linux. The fastest screen 
 
 License:        GPL-3.0-or-later
 
-URL:            https://git.dec05eba.com/%{name}
+URL:            https://git.dec05eba.com/%{name}/about
 
 Source:         https://dec05eba.com/snapshot/%{name}.git.%{snapshot}.tar.gz
 
 BuildRequires:  pkgconfig(libva)
 BuildRequires:  pkgconfig(libdrm)
 BuildRequires:  pkgconfig(libva-drm)
-BuildRequires:  libdrm-devel
+BuildRequires:  vulkan-headers
 BuildRequires:  pkgconfig(libcap)
 BuildRequires:  pkgconfig(wayland-client)
+BuildRequires:  pkgconfig(wayland-egl)
 BuildRequires:  pkgconfig(libpulse)
 BuildRequires:  /usr/bin/ffmpeg
-BuildRequires:  pkgconfig(libavcodec)
-BuildRequires:  pkgconfig(libavformat)
-BuildRequires:  pkgconfig(libavutil)
-BuildRequires:  pkgconfig(libswresample)
-BuildRequires:  pkgconfig(libavfilter)
 BuildRequires:  pkgconfig(x11)
 BuildRequires:  meson
 BuildRequires:  pipewire-devel
 BuildRequires:  pipewire-libs
-
-#BuildRequires: nvidia-utils            
-#BuildRequires: libxnvctrl             
-BuildRequires: mesa-libGL-devel         
-BuildRequires: libva-intel-driver       
-BuildRequires: intel-media-driver    
-
+BuildRequires:  libglvnd
+     
 
 %description
 %{name} is a shadowplay-like screen recorder for Linux. It is the fastest screen recorder for Linux.

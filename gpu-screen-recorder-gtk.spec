@@ -1,5 +1,4 @@
 %global snapshot r421.c08811c
-%global debug_package %{nil}
 
 Name:           gpu-screen-recorder-gtk
 Version:        %{snapshot}
@@ -9,59 +8,8 @@ License:        GPL-3.0-or-later
 Source:         https://dec05eba.com/snapshot/%{name}.git.%{snapshot}.tar.gz
 URL:            https://git.dec05eba.com/%{name}
 
-BuildRequires:  bash
-BuildRequires:  git
 BuildRequires:  gtk3-devel
-BuildRequires:  libayatana-appindicator-gtk3-devel
-BuildRequires:  cmake
-BuildRequires:  gcc
-BuildRequires:  gcc-c++
-BuildRequires:  pkgconfig(x11)
-BuildRequires:  make
-BuildRequires:  libX11-devel
-BuildRequires:  pulseaudio-libs-devel
-BuildRequires:  wayland-devel
-BuildRequires:  pkgconfig(xdamage)
-BuildRequires:  pkgconfig(xcomposite)
-BuildRequires:  pkgconfig(xrender)
-BuildRequires:  pkgconfig(xext)
-BuildRequires:  pkgconfig(xfixes)
-BuildRequires:  pkgconfig(xtst)
-BuildRequires:  pkgconfig(libdrm)
-BuildRequires:  libXcomposite-devel
-BuildRequires:  libXrandr-devel
-BuildRequires:  libXfixes-devel
-BuildRequires:  pulseaudio-libs-devel
-BuildRequires:  libdrm
-BuildRequires:  libva-devel
-BuildRequires:  libcap-devel
-BuildRequires:  libdrm-devel
-BuildRequires:  wayland-devel
-# https://i.imgflip.com/1tpd.gif
-#BuildRequires: nvidia-settings
-
-# Additional dependencies found via pkg-config
-BuildRequires: pkgconfig(libavcodec)
-BuildRequires: pkgconfig(libavformat)
-BuildRequires: pkgconfig(libavutil)
-BuildRequires: pkgconfig(libswresample)
-BuildRequires: pkgconfig(libavfilter)
-BuildRequires: pkgconfig(x11)
-BuildRequires: pkgconfig(xcomposite)
-BuildRequires: pkgconfig(xrandr)
-BuildRequires: pkgconfig(xfixes)
-BuildRequires: pkgconfig(libpulse)
-BuildRequires: pkgconfig(libva)
-BuildRequires: pkgconfig(libdrm)
-BuildRequires: pkgconfig(libcap)
-BuildRequires: pkgconfig(wayland-client)
-BuildRequires: libX11
-BuildRequires: libX11-common
-#BuildRequires: nvidia-utils            
-#BuildRequires: libxnvctrl             
-BuildRequires: mesa-libGL-devel         
-BuildRequires: libva-intel-driver       
-BuildRequires: intel-media-driver     
+BuildRequires:  libayatana-appindicator-gtk3-devel  
 Requires: gpu-screen-recorder
 
 %description
@@ -76,7 +24,6 @@ ls
 %meson
 %meson_build
 
-# Installation requires root permissions
 %install
 %meson_install
 
