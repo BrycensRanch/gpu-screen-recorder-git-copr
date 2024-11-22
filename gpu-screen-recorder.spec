@@ -1,4 +1,4 @@
-%global snapshot r584.357df7c
+%global snapshot r909.8644c72
 %global debug_package %{nil}
 
 Name:           gpu-screen-recorder
@@ -18,19 +18,17 @@ BuildRequires:  pkgconfig(libva-drm)
 BuildRequires:  libdrm-devel
 BuildRequires:  pkgconfig(libcap)
 BuildRequires:  pkgconfig(wayland-client)
-BuildRequires:  pkgconfig(libX11)
-BuildRequires:  pkgconfig(libX11-common)
-BuildRequires:  pkgconfig(libXcomposite)
-BuildRequires:  pkgconfig(libXrandr)
-BuildRequires:  pkgconfig(libXfixes)
 BuildRequires:  pkgconfig(libpulse)
-BuildRequires:  pkgconfig(ffmpeg)
+BuildRequires:  /usr/bin/ffmpeg
 BuildRequires:  pkgconfig(libavcodec)
 BuildRequires:  pkgconfig(libavformat)
 BuildRequires:  pkgconfig(libavutil)
 BuildRequires:  pkgconfig(libswresample)
 BuildRequires:  pkgconfig(libavfilter)
 BuildRequires:  pkgconfig(x11)
+BuildRequires:  meson
+BuildRequires:  pipewire-devel
+BuildRequires:  pipewire-libs
 
 #BuildRequires: nvidia-utils            
 #BuildRequires: libxnvctrl             
@@ -47,17 +45,16 @@ BuildRequires: intel-media-driver
 %autosetup -c
 
 %build
-./build.sh
+ls
+%meson
+%meson_build
 
-# Installation requires root permissions
+
 %install
-rm -rf $RPM_BUILD_ROOT
-mkdir -p %{buildroot}%{_bindir}
-install -Dm755 %{name} %{buildroot}%{_bindir}
-install -Dm755 gsr-kms-server %{buildroot}%{_bindir}
-install -Dm644 "extra/%{name}.service" "%{buildroot}/usr/lib/systemd/user/%{name}.service"
+%meson_install
 
-
+%check
+%meson_test
 
 %files
 %license LICENSE
@@ -65,7 +62,7 @@ install -Dm644 "extra/%{name}.service" "%{buildroot}/usr/lib/systemd/user/%{name
 %{_bindir}/gpu-screen-recorder
 %{_bindir}/gsr-kms-server
 /usr/lib/systemd/user/%{name}.service
-
+/usr/lib/modprobe.d/gsr-nvidia.conf
 
 
 %changelog

@@ -1,4 +1,4 @@
-%global snapshot r269.67a2c39
+%global snapshot r421.c08811c
 %global debug_package %{nil}
 
 Name:           gpu-screen-recorder-gtk
@@ -11,6 +11,8 @@ URL:            https://git.dec05eba.com/%{name}
 
 BuildRequires:  bash
 BuildRequires:  git
+BuildRequires:  gtk3-devel
+BuildRequires:  libayatana-appindicator-gtk3-devel
 BuildRequires:  cmake
 BuildRequires:  gcc
 BuildRequires:  gcc-c++
@@ -26,15 +28,15 @@ BuildRequires:  pkgconfig(xext)
 BuildRequires:  pkgconfig(xfixes)
 BuildRequires:  pkgconfig(xtst)
 BuildRequires:  pkgconfig(libdrm)
-BuildRequires: libXcomposite-devel
-BuildRequires: libXrandr-devel
-BuildRequires: libXfixes-devel
-BuildRequires: pulseaudio-libs-devel
-BuildRequires: libdrm
-BuildRequires: libva-devel
-BuildRequires: libcap-devel
-BuildRequires: libdrm-devel
-BuildRequires: wayland-devel
+BuildRequires:  libXcomposite-devel
+BuildRequires:  libXrandr-devel
+BuildRequires:  libXfixes-devel
+BuildRequires:  pulseaudio-libs-devel
+BuildRequires:  libdrm
+BuildRequires:  libva-devel
+BuildRequires:  libcap-devel
+BuildRequires:  libdrm-devel
+BuildRequires:  wayland-devel
 # https://i.imgflip.com/1tpd.gif
 #BuildRequires: nvidia-settings
 
@@ -70,18 +72,16 @@ Requires: gpu-screen-recorder
 
 
 %build
-./build.sh
+ls
+%meson
+%meson_build
 
 # Installation requires root permissions
 %install
-rm -rf $RPM_BUILD_ROOT
-mkdir -p %{buildroot}%{_bindir}
-install -Dm755 %{name} %{buildroot}%{_bindir}
-install -Dm644 "%{name}.desktop" "%{buildroot}/usr/share/applications/com.dec05eba.gpu_screen_recorder.desktop"
-install -Dm644 com.dec05eba.gpu_screen_recorder.appdata.xml "%{buildroot}/usr/share/metainfo/com.dec05eba.gpu_screen_recorder.appdata.xml"
-install -Dm644 icons/hicolor/64x64/apps/com.dec05eba.gpu_screen_recorder.png "%{buildroot}/usr/share/icons/hicolor/64x64/apps/com.dec05eba.gpu_screen_recorder.png"
-install -Dm644 icons/hicolor/128x128/apps/com.dec05eba.gpu_screen_recorder.png "%{buildroot}/usr/share/icons/hicolor/128x128/apps/com.dec05eba.gpu_screen_recorder.png"
+%meson_install
 
+%check
+%meson_test
 
 %files
 %license LICENSE
@@ -89,9 +89,7 @@ install -Dm644 icons/hicolor/128x128/apps/com.dec05eba.gpu_screen_recorder.png "
 %{_bindir}/%{name}
 /usr/share/applications/com.dec05eba.gpu_screen_recorder.desktop
 /usr/share/metainfo/com.dec05eba.gpu_screen_recorder.appdata.xml
-/usr/share/icons/hicolor/64x64/apps/com.dec05eba.gpu_screen_recorder.png
-/usr/share/icons/hicolor/128x128/apps/com.dec05eba.gpu_screen_recorder.png
-
+/usr/share/icons/hicolor/
 
 %changelog
 %autochangelog
