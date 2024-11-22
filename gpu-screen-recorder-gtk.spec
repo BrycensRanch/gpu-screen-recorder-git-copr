@@ -6,21 +6,21 @@ Release:        %autorelease
 Summary:        A shadowplay-like screen recorder for Linux. The fastest screen recorder for Linux.
 License:        GPL-3.0-or-later
 Source:         https://dec05eba.com/snapshot/%{name}.git.%{snapshot}.tar.gz
-URL:            https://git.dec05eba.com/%{name}
+URL:            https://git.dec05eba.com/%{name}/about
 
 BuildRequires:  gtk3-devel
 BuildRequires:  libayatana-appindicator-gtk3-devel  
-Requires: gpu-screen-recorder
+Requires:       gpu-screen-recorder
 
 %description
-%{name} is a shadowplay-like screen recorder for Linux. It is the fastest screen recorder for Linux.
+Shadowplay like screen recorder for Linux. This package exposes the GTK3 UI.
+
 
 %prep
 %autosetup -c
 
 
 %build
-ls
 %meson
 %meson_build
 

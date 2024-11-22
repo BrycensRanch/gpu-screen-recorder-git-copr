@@ -25,17 +25,16 @@ BuildRequires:  meson
 BuildRequires:  pipewire-devel
 BuildRequires:  pipewire-libs
 BuildRequires:  libglvnd
-     
+
 
 %description
-%{name} is a shadowplay-like screen recorder for Linux. It is the fastest screen recorder for Linux.
- 
+Shadowplay like screen recorder for Linux. It is the fastest screen recorder for Linux.
+
 
 %prep
 %autosetup -c
 
 %build
-ls
 %meson
 %meson_build
 
