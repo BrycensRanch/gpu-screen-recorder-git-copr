@@ -33,9 +33,8 @@ BuildRequires:  pkgconfig(xrandr)
 BuildRequires:  pkgconfig(xfixes)
 BuildRequires:  meson
 BuildRequires:  pkgconfig(dbus-1)
-BuildRequires:  pipewire-devel
-BuildRequires:  pipewire-libs
-BuildRequires:  libglvnd
+BuildRequires:  pkgconfig(libspa-0.2)
+BuildRequires:  pkgconfig(libglvnd)
 
 
 %description
