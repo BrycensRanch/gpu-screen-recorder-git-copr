@@ -11,6 +11,7 @@ URL:            https://git.dec05eba.com/%{name}/about
 
 Source:         https://dec05eba.com/snapshot/%{name}.git.%{snapshot}.tar.gz
 
+BuildRequires:  gcc
 BuildRequires:  pkgconfig(libva)
 BuildRequires:  pkgconfig(libdrm)
 BuildRequires:  pkgconfig(libva-drm)
