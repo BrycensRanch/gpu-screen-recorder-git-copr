@@ -12,7 +12,7 @@ URL:            https://git.dec05eba.com/%{name}/about
 Epoch:          2
 
 BuildRequires:  gcc
-BuildRequires:  gcc-g++
+BuildRequires:  (gcc-g++ or gcc-c++)
 BuildRequires:  meson
 BuildRequires:  cmake
 BuildRequires:  pkgconfig(gtk+-3.0)
