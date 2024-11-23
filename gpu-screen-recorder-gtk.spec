@@ -13,6 +13,7 @@ Epoch:          2
 
 BuildRequires:  gcc
 BuildRequires:  gcc-g++
+BuildRequires:  meson
 BuildRequires:  cmake
 BuildRequires:  pkgconfig(gtk+-3.0)
 BuildRequires:  pkgconfig(ayatana-appindicator3-0.1)
