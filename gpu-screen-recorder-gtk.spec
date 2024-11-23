@@ -2,7 +2,7 @@
 
 Name:           gpu-screen-recorder-gtk
 Version:        4.3.3
-Release:        %autorelease
+Release:        2%{dist}
 Summary:        A shadowplay-like screen recorder for Linux. The fastest screen recorder for Linux.
 License:        GPL-3.0-or-later
 Source:         https://dec05eba.com/snapshot/%{name}.git.%{snapshot}.tar.gz
@@ -13,8 +13,9 @@ Epoch:          2
 
 BuildRequires:  gcc
 BuildRequires:  gcc-g++
-BuildRequires:  gtk3-devel
-BuildRequires:  libayatana-appindicator-gtk3-devel  
+BuildRequires:  cmake
+BuildRequires:  pkgconfig(gtk+-3.0)
+BuildRequires:  pkgconfig(ayatana-appindicator3-0.1)
 Requires:       gpu-screen-recorder
 
 %description
@@ -44,4 +45,3 @@ Shadowplay like screen recorder for Linux. This package exposes the GTK3 UI.
 /usr/share/icons/hicolor/
 
 %changelog
-%autochangelog
