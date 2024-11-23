@@ -16,6 +16,7 @@ BuildRequires:  gcc-g++
 BuildRequires:  cmake
 BuildRequires:  pkgconfig(gtk+-3.0)
 BuildRequires:  pkgconfig(ayatana-appindicator3-0.1)
+BuildRequires:  desktop-file-utils
 Requires:       gpu-screen-recorder
 
 %description
