@@ -16,7 +16,7 @@ BuildRequires:  (gcc-g++ or gcc-c++)
 BuildRequires:  meson
 BuildRequires:  cmake
 BuildRequires:  pkgconfig(gtk+-3.0)
-BuildRequires:  (pkgconfig(ayatana-appindicator3-0.1) or libayatana-appindicator-gtk3-devel or libayatana-appindicator3)
+BuildRequires:  (pkgconfig(ayatana-appindicator3-0.1) or libayatana-appindicator-gtk3-devel or libayatana-appindicator3-dev)
 BuildRequires:  desktop-file-utils
 Requires:       gpu-screen-recorder
 
