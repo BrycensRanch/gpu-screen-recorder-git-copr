@@ -2,7 +2,7 @@
 
 Name:           gpu-screen-recorder-notification
 Version:        %{snapshot}
-Release:        1%{dist}
+Release:        2%{dist}
 Summary:        A shadowplay-like screen recorder for Linux. The fastest screen recorder for Linux.
 License:        GPL-3.0-or-later
 Source:         https://dec05eba.com/snapshot/%{name}.git.%{snapshot}.tar.gz
@@ -36,7 +36,7 @@ A fullscreen overlay UI for GPU Screen Recorder in the style of ShadowPlay.
 %meson_install
 
 # Say it with me. I will not violate Fedora packaging guidelines.
-rm -rf %{_datadir}/gsr-notify/fonts
+rm -rf %{_buildroot}%{_datadir}/gsr-notify/fonts
 
 %check
 %meson_test
