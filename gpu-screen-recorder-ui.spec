@@ -1,4 +1,4 @@
-%global snapshot r142.4c83972
+%global snapshot r144.846d3c4
 
 Name:           gpu-screen-recorder-ui
 Version:        %{snapshot}
@@ -44,7 +44,7 @@ A fullscreen overlay UI for GPU Screen Recorder in the style of ShadowPlay.
 %meson_install
 
 # Say it with me. I will not violate Fedora packaging guidelines.
-rm -rf %{_datadir}/gsr-ui/fonts
+rm -rf %{_buildroot}%{_datadir}/gsr-ui/fonts
 
 %check
 %meson_test
