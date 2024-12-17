@@ -1,4 +1,4 @@
-%global snapshot r144.846d3c4
+%global snapshot r152.9ab0e45
 
 Name:           gpu-screen-recorder-ui
 Version:        %{snapshot}
