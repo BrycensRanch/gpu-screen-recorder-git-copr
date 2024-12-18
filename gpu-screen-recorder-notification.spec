@@ -11,12 +11,10 @@ URL:            https://git.dec05eba.com/%{name}/about
 BuildRequires:  gcc
 BuildRequires:  (gcc-g++ or gcc-c++)
 BuildRequires:  meson
-BuildRequires:  cmake
 BuildRequires:  pkgconfig(x11)
 BuildRequires:  pkgconfig(xext)
 BuildRequires:  pkgconfig(xrandr)
 BuildRequires:  pkgconfig(xrender)
-BuildRequires:  desktop-file-utils
 BuildRequires:  pkgconfig(libglvnd)
 Requires:       (google-noto-sans-fonts or noto-sans)
 

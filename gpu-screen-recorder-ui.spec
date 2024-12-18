@@ -11,21 +11,16 @@ URL:            https://git.dec05eba.com/%{name}/about
 BuildRequires:  gcc
 BuildRequires:  (gcc-g++ or gcc-c++)
 BuildRequires:  meson
-BuildRequires:  cmake
 BuildRequires:  pkgconfig(x11)
-BuildRequires:  pkgconfig(xdamage)
 BuildRequires:  pkgconfig(xcomposite)
 BuildRequires:  pkgconfig(xrandr)
 BuildRequires:  pkgconfig(xfixes)
 BuildRequires:  pkgconfig(xi)
 BuildRequires:  pkgconfig(xrender)
-BuildRequires:  pkgconfig(libevdev)
-BuildRequires:  pkgconfig(libudev)
-BuildRequires:  pkgconfig(libinput)
-BuildRequires:  pkgconfig(xkbcommon)
 BuildRequires:  pkgconfig(libglvnd)
-BuildRequires:  desktop-file-utils
+BuildRequires:  kernel-headers
 Requires:       gpu-screen-recorder
+Requires:       gpu-screen-recorder-notification
 Requires:       (google-noto-sans-fonts or noto-sans)
 
 %description
