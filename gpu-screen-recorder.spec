@@ -1,4 +1,4 @@
-%global snapshot r932.027b29c
+%global snapshot r936.621f253
 
 Name:           gpu-screen-recorder
 Version:        5.0.0
