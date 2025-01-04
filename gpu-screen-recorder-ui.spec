@@ -21,6 +21,7 @@ BuildRequires:  pkgconfig(xfixes)
 BuildRequires:  pkgconfig(xi)
 BuildRequires:  pkgconfig(xrender)
 BuildRequires:  pkgconfig(libglvnd)
+BuildRequires:  pkgconfig(xcursor)
 BuildRequires:  kernel-headers
 Requires:       gpu-screen-recorder
 Requires:       gpu-screen-recorder-notification
