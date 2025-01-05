@@ -1,4 +1,4 @@
-%global snapshot r202.f379b87
+%global snapshot r204.fa5b7a0
 
 Name:           gpu-screen-recorder-ui
 Version:        1.0.4
