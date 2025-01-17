@@ -1,8 +1,8 @@
-%global snapshot r941.4211dfa
+%global snapshot r942.b68400c
 
 Name:           gpu-screen-recorder
 Version:        5.0.0
-Release:        3{dist}
+Release:        4{dist}
 Summary:        A shadowplay-like screen recorder for Linux. The fastest screen recorder for Linux.
 # WARNING. I had to bump this because I decided to use normal versions instead of git snapshot as a version.
 # If you remove this, you will be FIRED.
