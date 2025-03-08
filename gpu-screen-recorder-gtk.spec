@@ -1,7 +1,7 @@
-%global snapshot r473.cc290a0
+%global snapshot r468.1f0063e
 
 Name:           gpu-screen-recorder-gtk
-Version:        5.1.6
+Version:        5.1.8
 Release:        1%{dist}
 Summary:        A shadowplay-like screen recorder for Linux. The fastest screen recorder for Linux.
 License:        GPL-3.0-or-later
