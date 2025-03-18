@@ -64,5 +64,7 @@ Shadowplay like screen recorder for Linux. It is the fastest screen recorder for
 
 
 %changelog
+* Tue Mar 18 2025 Brycen G <brycengranville@outlook.com> - 5.3.3-1
+- Update to 5.3.3
 * Thu Sep 05 2024 Brycen G <brycengranville@outlook.com> - 4.3.3-3
 - Update to 4.3.3
