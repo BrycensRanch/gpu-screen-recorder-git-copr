@@ -24,6 +24,7 @@ BuildRequires:  pkgconfig(libglvnd)
 BuildRequires:  pkgconfig(xcursor)
 BuildRequires:  pkgconfig(libpulse-simple)
 BuildRequires:  pkgconfig(wayland-scanner)
+BuildRequires:  pkgconfig(wayland-client)
 BuildRequires:  pkgconfig(libdrm)
 BuildRequires:  kernel-headers
 Requires:       gpu-screen-recorder
