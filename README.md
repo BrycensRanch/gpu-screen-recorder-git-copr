@@ -26,7 +26,7 @@ Supported image formats:
 * JPEG
 * PNG
 
-This software works on X11 and Wayland on AMD, Intel and NVIDIA. Replay data is stored in RAM, not disk.
+This software works on X11 and Wayland on AMD, Intel and NVIDIA. Replay data is stored in RAM by default but there is an option to store it on disk instead.
 ### TEMPORARY ISSUES
 1) Videos are in variable framerate format. Use MPV to play such videos, otherwise you might experience stuttering in the video if you are using a buggy video player. You can try saving the video into a .mkv file instead as some software may have better support for .mkv files (such as kdenlive). You can use the "-fm cfr" option to to use constant framerate mode.
 2) FLAC audio codec is disabled at the moment because of temporary issues.
@@ -39,10 +39,10 @@ For you as a user this only means that if you installed GPU Screen Recorder as a
 On a system with a i5 4690k CPU and a GTX 1080 GPU:\
 When recording Legend of Zelda Breath of the Wild at 4k, fps drops from 30 to 7 when using OBS Studio + nvenc, however when using this screen recorder the fps remains at 30.\
 When recording GTA V at 4k on highest settings, fps drops from 60 to 23 when using obs-nvfbc + nvenc, however when using this screen recorder the fps only drops to 58.\
-GPU Screen Recorder also produces much smoother videos than OBS when GPU utilization is close to 100%, see comparison here: [https://www.youtube.com/watch?v=zfj4sNVLLLg](https://www.youtube.com/watch?v=zfj4sNVLLLg).\
+GPU Screen Recorder also produces much smoother videos than OBS when GPU utilization is close to 100%, see comparison here: [https://www.youtube.com/watch?v=zfj4sNVLLLg](https://www.youtube.com/watch?v=zfj4sNVLLLg) and [https://www.youtube.com/watch?v=aK67RSZw2ZQ](https://www.youtube.com/watch?v=aK67RSZw2ZQ).\
 GPU Screen Recorder has much better performance than OBS Studio even with version 30.2 that does "zero-copy" recording and encoding, see: [https://www.youtube.com/watch?v=jdroRjibsDw](https://www.youtube.com/watch?v=jdroRjibsDw).\
 It is recommended to save the video to a SSD because of the large file size, which a slow HDD might not be fast enough to handle. Using variable framerate mode (-fm vfr) which is the default is also recommended as this reduces encoding load. Ultra quality is also overkill most of the time, very high (the default) or lower quality is usually enough.\
-Note that recording on AMD can have some performance issues on Wayland in the recording itself when recording without desktop portal unless your mesa version is 25.0.0 or greater.
+Note that for best performance you should close other screen recorders such as OBS Studio when using GPU Screen Recorder even if they are not recording, since they can affect performance even when idle. This is the case with OBS Studio.
 ## Note about optimal performance on NVIDIA
 NVIDIA driver has a "feature" (read: bug) where it will downclock memory transfer rate when a program uses cuda (or nvenc, which uses cuda), such as GPU Screen Recorder. To work around this bug, GPU Screen Recorder can overclock your GPU memory transfer rate to it's normal optimal level.\
 To enable overclocking for optimal performance use the `-oc` option when running GPU Screen Recorder. You also need to have "Coolbits" NVIDIA X setting set to "12" to enable overclocking. You can automatically add this option if you run `sudo nvidia-xconfig --cool-bits=12` and then reboot your computer.\
@@ -85,8 +85,7 @@ These are the dependencies needed to build GPU Screen Recorder:
 * libva (and libva-drm)
 * libdrm
 * libcap
-* wayland-client
-* wayland-egl
+* wayland (wayland-client, wayland-egl, wayland-scanner)
 
 ## Runtime dependencies
 There are also additional dependencies needed at runtime depending on your GPU vendor:
@@ -116,13 +115,15 @@ There is also a gui for the gpu screen recorder called [GPU Screen Recorder GTK]
 There is also a new alternative UI for GPU Screen Recorder in the style of ShadowPlay called [GPU Screen Recorder UI](https://git.dec05eba.com/gpu-screen-recorder-ui/).
 ## Recording
 Here is an example of how to record your monitor and the default audio output: `gpu-screen-recorder -w screen -f 60 -a default_output -o ~/Videos/test_video.mp4`.
-Yyou can stop and save the recording with `Ctrl+C` or by running `killall -SIGINT gpu-screen-recorder`.
+Yyou can stop and save the recording with `Ctrl+C` or by running `pkill -SIGINT -f gpu-screen-recorder`.
 You can see a list of capture options to record if you run `gpu-screen-recorder --list-capture-options`. This will list possible capture options and monitor names, for example:\
 ```
   window
   DP-1|1920x1080
 ```
-in this case you could record a window or a monitor with the name `DP-1`.
+in this case you could record a window or a monitor with the name `DP-1`.\
+To list available audio devices that you can use you can run `gpu-screen-recorder --list-audio-devices` and the name to use is on the left size of the `|`.\
+To list available audio application names that you can use you can run `gpu-screen-recorder --list-application-audio`.
 ## Streaming
 Streaming works the same as recording, but the `-o` argument should be path to the live streaming service you want to use (including your live streaming key). Take a look at `scripts/twitch-stream.sh` to see an example of how to stream to twitch.
 ## Replay mode
@@ -132,10 +133,15 @@ The file path to the saved replay is output to stdout. All other output from GPU
 You can also use the `-sc` option to specify a script that should be run (asynchronously) when the video has been saved and the script will have access to the location of the saved file as its first argument.
 This can be used for example to show a notification when a replay has been saved, to rename the video with a title that matches the game played (see `scripts/record-save-application-name.sh` as an example on how to do this on X11) or to re-encode the video.\
 The replay buffer is stored in ram (as encoded video), so don't use a too large replay time and/or video quality unless you have enough ram to store it.
+## Recording while using replay/streaming
+You can record a regular video while using replay/streaming by launching GPU Screen Recorder with the `-ro` option to specify a directory where to save the recording.\
+To start/stop (and save) recording use the SIGRTMIN signal, for example `pkill -SIGRTMIN -f gpu-screen-recorder`. The name of the video will be displayed in stdout when saving the video.\
+This way of recording while using replay/streaming is more efficient than running GPU Screen Recorder multiple times since this way it only records the screen and encodes the video once.
 ## Controlling GPU Screen Recorder remotely
-To save a video in replay mode, you need to send signal SIGUSR1 to gpu screen recorder. You can do this by running `killall -SIGUSR1 gpu-screen-recorder`.\
-To stop recording send SIGINT to gpu screen recorder. You can do this by running `killall -SIGINT gpu-screen-recorder` or pressing `Ctrl-C` in the terminal that runs gpu screen recorder. When recording a regular non-replay video this will also save the video.\
-To pause/unpause recording send SIGUSR2 to gpu screen recorder. You can do this by running `killall -SIGUSR2 gpu-screen-recorder`. This is only applicable and useful when recording (not streaming nor replay).\
+To save a video in replay mode, you need to send signal SIGUSR1 to gpu screen recorder. You can do this by running `pkill -SIGUSR1 -f gpu-screen-recorder`.\
+To stop recording send SIGINT to gpu screen recorder. You can do this by running `pkill -SIGINT -f gpu-screen-recorder` or pressing `Ctrl-C` in the terminal that runs gpu screen recorder. When recording a regular non-replay video this will also save the video.\
+To pause/unpause recording send SIGUSR2 to gpu screen recorder. You can do this by running `pkill -SIGUSR2 -f gpu-screen-recorder`. This is only applicable and useful when recording (not streaming nor replay).\
+There are more signals to control GPU Screen Recorder. Run `gpu-screen-recorder --help` to list them all (under `NOTES` section).
 ## Simple way to run replay without gui
 Run the script `scripts/start-replay.sh` to start replay and then `scripts/save-replay.sh` to save a replay and `scripts/stop-replay.sh` to stop the replay. The videos are saved to `$HOME/Videos`.
 You can use these scripts to start replay at system startup if you add `scripts/start-replay.sh` to startup (this can be done differently depending on your desktop environment / window manager) and then go into
@@ -185,3 +191,5 @@ To fix this you can either record the video in .mkv format or constant frame rat
 ## Colors look incorrect when recording HDR (with hevc_hdr/av1_hdr) or using an ICC profile
 KDE Plasma version 6.2 broke HDR and ICC profiles for screen recorders. This was changed in KDE plasma version 6.3 and recording HDR works now, as long as you set HDR brightness to 100% (which means setting "Maximum SDR Brightness" in KDE plasma display settings to 203) and set color accuracy to "Prefer color accuracy". If you want to convert HDR to SDR then record with desktop portal option (`-w portal`) instead.
 I don't know how well recording HDR works in wayland compositors other than KDE plasma.
+## GPU Screen Recorder starts lagging after 30-40 minutes when launching GPU Screen Recorder from steam command launcher
+This is a [steam issue](https://github.com/ValveSoftware/steam-for-linux/issues/11446). Prepend the gpu-screen-recorder command with `LD_PREFIX=""`, for example `LD_PREFIX="" gpu-screen-recorder -w screen -o video.mp4`.
