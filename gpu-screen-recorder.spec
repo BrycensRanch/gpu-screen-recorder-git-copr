@@ -59,6 +59,7 @@ Shadowplay like screen recorder for Linux. It is the fastest screen recorder for
 %doc README.md
 %{_bindir}/gpu-screen-recorder
 %{_bindir}/gsr-kms-server
+%{_bindir}/gsr-dbus-server
 /usr/lib/systemd/user/%{name}.service
 /usr/lib/modprobe.d/gsr-nvidia.conf
 
