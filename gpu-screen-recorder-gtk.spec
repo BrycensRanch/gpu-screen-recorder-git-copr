@@ -1,11 +1,15 @@
 %global snapshot r488.6994fb1
 
+# gsr's appdata was split into separate repository.
+%global appdata r1.5c13ff6
+
 Name:           gpu-screen-recorder-gtk
 Version:        5.7.0
 Release:        2%{dist}
 Summary:        A shadowplay-like screen recorder for Linux. The fastest screen recorder for Linux.
 License:        GPL-3.0-or-later
-Source:         https://dec05eba.com/snapshot/%{name}.git.%{snapshot}.tar.gz
+Source0:         https://dec05eba.com/snapshot/%{name}.git.%{snapshot}.tar.gz
+Source1:         https://dec05eba.com/snapshot/gpu-screen-recorder-appdata.git.%{appdata}.tar.gz
 URL:            https://git.dec05eba.com/%{name}/about
 # WARNING. I had to bump this because I decided to use normal versions instead of git snapshot as a version.
 # If you remove this, you will be FIRED.
@@ -32,6 +36,7 @@ Shadowplay like screen recorder for Linux. This package exposes the GTK3 UI.
 %meson_build
 
 %install
+install -Dm644 %{SOURCE1} %{buildroot}%{_datadir}/metainfo/com.dec05eba.gpu_screen_recorder.appdata.xml
 %meson_install
 
 %check
@@ -41,9 +46,9 @@ Shadowplay like screen recorder for Linux. This package exposes the GTK3 UI.
 %license LICENSE
 %doc README.md
 %{_bindir}/%{name}
-/usr/share/applications/com.dec05eba.gpu_screen_recorder.desktop
-/usr/share/metainfo/com.dec05eba.gpu_screen_recorder.appdata.xml
-/usr/share/icons/hicolor/
+%{_datadir}/applications/com.dec05eba.gpu_screen_recorder.desktop
+%{_datadir}/metainfo/com.dec05eba.gpu_screen_recorder.appdata.xml
+%{_datadir}/icons/hicolor/
 
 %changelog
 * Thu Sep 05 2024 Brycen G <brycengranville@outlook.com> - 4.3.3-3
