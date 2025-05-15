@@ -1,7 +1,7 @@
-%global snapshot r335.c7bfaf9
+%global snapshot r340.de1ed58
 
 Name:           gpu-screen-recorder-ui
-Version:        1.6.1
+Version:        1.6.3
 Release:        1%{dist}
 Summary:        A shadowplay-like screen recorder for Linux. The fastest screen recorder for Linux.
 License:        GPL-3.0-or-later
