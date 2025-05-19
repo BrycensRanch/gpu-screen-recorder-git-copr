@@ -193,3 +193,5 @@ KDE Plasma version 6.2 broke HDR and ICC profiles for screen recorders. This was
 I don't know how well recording HDR works in wayland compositors other than KDE plasma.
 ## GPU Screen Recorder starts lagging after 30-40 minutes when launching GPU Screen Recorder from steam command launcher
 This is a [steam issue](https://github.com/ValveSoftware/steam-for-linux/issues/11446). Prepend the gpu-screen-recorder command with `LD_PREFIX=""`, for example `LD_PREFIX="" gpu-screen-recorder -w screen -o video.mp4`.
+## The video isn't smooth when gpu usage is 100%
+If you are using the flatpak version of GPU Screen Recorder then try installing GPU Screen Recorder from aur or source instead. Flatpak has a limitation that prevents GPU Screen Recorder from running faster when playing very heavy games.
