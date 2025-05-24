@@ -2,7 +2,7 @@
 
 Name:           gpu-screen-recorder-ui
 Version:        1.6.4
-Release:        2%{dist}
+Release:        3%{dist}
 Summary:        A shadowplay-like screen recorder for Linux. The fastest screen recorder for Linux.
 License:        GPL-3.0-or-later
 Source:         https://dec05eba.com/snapshot/%{name}.git.%{snapshot}.tar.gz
@@ -30,6 +30,7 @@ BuildRequires:  kernel-headers
 Requires:       gpu-screen-recorder
 Requires:       gpu-screen-recorder-notification
 Requires:       (google-noto-sans-fonts or noto-sans)
+Requires(post): libcap
 
 %description
 A fullscreen overlay UI for GPU Screen Recorder in the style of ShadowPlay.
@@ -51,6 +52,9 @@ rm -rf %{_buildroot}%{_datadir}/gsr-ui/fonts
 
 %check
 %meson_test
+
+%post
+setcap cap_setuid+ep %{_bindir}/gsr-global-hotkeys
 
 %files
 %license LICENSE

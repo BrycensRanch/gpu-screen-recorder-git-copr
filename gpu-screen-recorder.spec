@@ -2,7 +2,7 @@
 
 Name:           gpu-screen-recorder
 Version:        5.5.3
-Release:        3%{dist}
+Release:        4%{dist}
 Summary:        A shadowplay-like screen recorder for Linux. The fastest screen recorder for Linux.
 # WARNING. I had to bump this because I decided to use normal versions instead of git snapshot as a version.
 # If you remove this, you will be FIRED.
@@ -34,6 +34,7 @@ BuildRequires:  meson
 BuildRequires:  pkgconfig(dbus-1)
 BuildRequires:  pkgconfig(libspa-0.2)
 BuildRequires:  pkgconfig(libglvnd)
+Requires(post): libcap
 
 
 %description
@@ -53,6 +54,10 @@ Shadowplay like screen recorder for Linux. It is the fastest screen recorder for
 
 %check
 %meson_test
+
+%post
+setcap cap_sys_nice+ep %{_bindir}/gpu-screen-recorder
+setcap cap_sys_admin+ep %{_bindir}/gsr-kms-server
 
 %files
 %license LICENSE
