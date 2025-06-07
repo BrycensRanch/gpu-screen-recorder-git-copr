@@ -1,15 +1,15 @@
 %global snapshot r491.ace1cfe
 
 # gsr's appdata was split into separate repository.
-%global appdata r2.8aad116
+%global appdata r3.faf627b
 
 Name:           gpu-screen-recorder-gtk
 Version:        5.7.2
 Release:        1%{dist}
 Summary:        A shadowplay-like screen recorder for Linux. The fastest screen recorder for Linux.
 License:        GPL-3.0-or-later
-Source0:         https://dec05eba.com/snapshot/%{name}.git.%{snapshot}.tar.gz
-Source1:         https://dec05eba.com/snapshot/gpu-screen-recorder-appdata.git.%{appdata}.tar.gz
+Source0:        https://dec05eba.com/snapshot/%{name}.git.%{snapshot}.tar.gz
+Source1:        https://dec05eba.com/snapshot/gpu-screen-recorder-appdata.git.%{appdata}.tar.gz
 URL:            https://git.dec05eba.com/%{name}/about
 # WARNING. I had to bump this because I decided to use normal versions instead of git snapshot as a version.
 # If you remove this, you will be FIRED.
