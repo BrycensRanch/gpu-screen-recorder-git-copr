@@ -70,6 +70,7 @@ Here are some known unofficial packages:
 * Fedora: [Copr](https://copr.fedorainfracloud.org/coprs/brycensranch/gpu-screen-recorder-git/)
 * OpenMandriva: [gpu-screen-recorder](https://github.com/OpenMandrivaAssociation/gpu-screen-recorder)
 * Solus: [gpu-screen-recorder](https://github.com/getsolus/packages/tree/main/packages/g/gpu-screen-recorder)
+* Nobara: [Nobara wiki](https://wiki.nobaraproject.org/en/general-usage/additional-software/GPU-Screen-Recorder)
 
 # Dependencies
 GPU Screen Recorder uses meson build system so you need to install `meson` to build GPU Screen Recorder.
@@ -125,7 +126,9 @@ in this case you could record a window or a monitor with the name `DP-1`.\
 To list available audio devices that you can use you can run `gpu-screen-recorder --list-audio-devices` and the name to use is on the left size of the `|`.\
 To list available audio application names that you can use you can run `gpu-screen-recorder --list-application-audio`.
 ## Streaming
-Streaming works the same as recording, but the `-o` argument should be path to the live streaming service you want to use (including your live streaming key). Take a look at `scripts/twitch-stream.sh` to see an example of how to stream to twitch.
+Streaming works the same way as recording, but the `-o` argument should be path to the live streaming service you want to use (including your live streaming key). Take a look at `scripts/twitch-stream.sh` to see an example of how to stream to twitch.\
+GPU Screen Recorder uses Ffmpeg so GPU Screen Recorder supports all protocols that Ffmpeg supports.\
+If you want to reduce latency one thing you can do is to use the `-keyint` option, for example `-keyint 0.5`. Lower value means lower latency at the cost of increased bitrate/decreased quality.
 ## Replay mode
 Run `gpu-screen-recorder` with the `-c mp4` and `-r` option, for example: `gpu-screen-recorder -w screen -f 60 -r 30 -c mp4 -o ~/Videos`. Note that in this case, `-o` should point to a directory.\
 If `-df yes` is set, replays are save in folders based on the date.
@@ -187,7 +190,7 @@ You have to either record in hdr mode (-k `hevc_hdr` or -k `av1_hdr` option) to 
 ## GPU Screen Recorder records night light when recording in HDR mode
 You can record with desktop portal option (`-w portal`) instead which ignores night light, if you are ok with recording without HDR.
 ## Kdenlive says that the video is not usable for editing because it has variable frame rate
-To fix this you can either just press cancel, which will allow you to continue or record the video in .mkv format or constant frame rate (-fm cfr).
+To fix this you can either just press cancel, which will allow you to continue or record the video in .mkv format or constant frame rate (-fm cfr). I recommend recording the video in .mkv format and variable frame rate (-fm vfr).
 ## Colors look incorrect when recording HDR (with hevc_hdr/av1_hdr) or using an ICC profile
 KDE Plasma version 6.2 broke HDR and ICC profiles for screen recorders. This was changed in KDE plasma version 6.3 and recording HDR works now, as long as you set HDR brightness to 100% (which means setting "Maximum SDR Brightness" in KDE plasma display settings to 203) and set color accuracy to "Prefer color accuracy". If you want to convert HDR to SDR then record with desktop portal option (`-w portal`) instead.
 I don't know how well recording HDR works in wayland compositors other than KDE plasma.
@@ -195,3 +198,5 @@ I don't know how well recording HDR works in wayland compositors other than KDE 
 This is a [steam issue](https://github.com/ValveSoftware/steam-for-linux/issues/11446). Prepend the gpu-screen-recorder command with `LD_PREFIX=""`, for example `LD_PREFIX="" gpu-screen-recorder -w screen -o video.mp4`.
 ## The video isn't smooth when gpu usage is 100%
 If you are using the flatpak version of GPU Screen Recorder then try installing GPU Screen Recorder from a non-flatpak source instead (such as from aur or from source). Flatpak has a limitation that prevents GPU Screen Recorder from running faster when playing very heavy games.
+## How do I apply audio effects, such as noise suppression?
+You have to use external software for that, such as Easy Effects or NoiseTorch.
