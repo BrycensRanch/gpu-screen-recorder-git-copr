@@ -88,7 +88,7 @@ These are the dependencies needed to build GPU Screen Recorder:
 * wayland (wayland-client, wayland-egl, wayland-scanner)
 
 ## Runtime dependencies
-* libglvnd (which provides libgl, libglx and libegl) is needed. Your system needs to support at least OpenGL ES 3.1.
+* libglvnd (which provides libgl, libglx and libegl) is needed. Your system needs to support at least OpenGL ES 3.0 (released in 2012)
 
 There are also additional dependencies needed at runtime depending on your GPU vendor:
 
@@ -98,7 +98,7 @@ There are also additional dependencies needed at runtime depending on your GPU v
 
 ### Intel
 * mesa
-* vaapi (intel-media-driver/libva-intel-driver/linux-firmware, depending on which intel iGPU you have)
+* vaapi (intel-media-driver/libva-intel-driver/linux-firmware-intel, depending on which intel iGPU you have)
 
 ### NVIDIA
 * cuda runtime (libcuda.so.1) (libnvidia-compute)
