@@ -26,7 +26,7 @@ Supported image formats:
 * JPEG
 * PNG
 
-This software works on X11 and Wayland on AMD, Intel and NVIDIA. Replay data is stored in RAM by default but there is an option to store it on disk instead.
+This software works on X11 and Wayland on AMD, Intel and NVIDIA.
 ### TEMPORARY ISSUES
 1) Videos are in variable framerate format. Use MPV to play such videos, otherwise you might experience stuttering in the video if you are using a buggy video player. You can try saving the video into a .mkv file instead as some software may have better support for .mkv files (such as kdenlive). You can use the "-fm cfr" option to to use constant framerate mode.
 2) FLAC audio codec is disabled at the moment because of temporary issues.
@@ -71,6 +71,7 @@ Here are some known unofficial packages:
 * OpenMandriva: [gpu-screen-recorder](https://github.com/OpenMandrivaAssociation/gpu-screen-recorder)
 * Solus: [gpu-screen-recorder](https://github.com/getsolus/packages/tree/main/packages/g/gpu-screen-recorder)
 * Nobara: [Nobara wiki](https://wiki.nobaraproject.org/en/general-usage/additional-software/GPU-Screen-Recorder)
+* AppImage [AppImage GitHub releases](https://github.com/pkgforge-dev/gpu-screen-recorder-AppImage/releases)
 
 # Dependencies
 GPU Screen Recorder uses meson build system so you need to install `meson` to build GPU Screen Recorder.
@@ -135,8 +136,11 @@ Run `gpu-screen-recorder` with the `-c mp4` and `-r` option, for example: `gpu-s
 If `-df yes` is set, replays are save in folders based on the date.
 The file path to the saved replay is output to stdout. All other output from GPU Screen Recorder are output to stderr.
 You can also use the `-sc` option to specify a script that should be run (asynchronously) when the video has been saved and the script will have access to the location of the saved file as its first argument.
-This can be used for example to show a notification when a replay has been saved, to rename the video with a title that matches the game played (see `scripts/record-save-application-name.sh` as an example on how to do this on X11) or to re-encode the video.\
-The replay buffer is stored in ram (as encoded video), so don't use a too large replay time and/or video quality unless you have enough ram to store it.
+This can be used for example to show a notification when a replay has been saved, to rename the video with a title that matches the game played (see `scripts/record-save-application-name.sh` as an example on how to do this on X11) or to re-encode the video.
+
+The replay buffer is stored in ram (as encoded video) by default, so don't use a too large replay time and/or video quality unless you have enough ram to store it.\
+You can use the `-replay-storage disk` option to store the replay buffer on disk instead of ram (in the same location as the output video).\
+By default videos are recorded with constant quality, but with replay mode you might want to record in constant bitrate mode instead for consistent ram/disk usage in high motion scenes. You can do that by using the `-bm cbr` option (along with `-q` option, for example `-bm cbr -q 20000`).
 ## Recording while using replay/streaming
 You can record a regular video while using replay/streaming by launching GPU Screen Recorder with the `-ro` option to specify a directory where to save the recording.\
 To start/stop (and save) recording use the SIGRTMIN signal, for example `pkill -SIGRTMIN -f gpu-screen-recorder`. The name of the video will be displayed in stdout when saving the video.\
@@ -171,7 +175,7 @@ See [https://git.dec05eba.com/?p=about](https://git.dec05eba.com/?p=about).
 # FAQ
 ## It tells me that my AMD/Intel GPU is not supported or that my GPU doesn't support h264/hevc, but that's not true!
 Some linux distros (such as manjaro and fedora) disable hardware accelerated h264/hevc on AMD/Intel because of "patent license issues". If you are using an arch-based distro then you can install mesa-git instead of mesa and if you are using another distro then you may have to switch to a better distro. On fedora based distros you can follow this: [Hardware Accelerated Codec](https://rpmfusion.org/Howto/Multimedia).\
-If you installed GPU Screen Recorder flatpak then you can try installing mesa-extra freedesktop runtime by running this command: `flatpak install --system org.freedesktop.Platform.GL.default//23.08-extra`
+You can alternatively install the flatpak version of GPU Screen Recorder from [flathub](https://flathub.org/apps/details/com.dec05eba.gpu_screen_recorder) which doesn't have this issue on any distro.
 ## I have an old nvidia GPU that supports nvenc but I get a cuda error when trying to record
 Newer ffmpeg versions don't support older nvidia cards. Try installing GPU Screen Recorder flatpak from [flathub](https://flathub.org/apps/details/com.dec05eba.gpu_screen_recorder) instead. It comes with an older ffmpeg version which might work for your GPU.
 ## I get a black screen/glitches while live streaming
@@ -197,7 +201,12 @@ KDE Plasma version 6.2 broke HDR and ICC profiles for screen recorders. This was
 I don't know how well recording HDR works in wayland compositors other than KDE plasma.
 ## GPU Screen Recorder starts lagging after 30-40 minutes when launching GPU Screen Recorder from steam command launcher
 This is a [steam issue](https://github.com/ValveSoftware/steam-for-linux/issues/11446). Prepend the gpu-screen-recorder command with `LD_PREFIX=""`, for example `LD_PREFIX="" gpu-screen-recorder -w screen -o video.mp4`.
-## The video isn't smooth when gpu usage is 100%
-If you are using the flatpak version of GPU Screen Recorder then try installing GPU Screen Recorder from a non-flatpak source instead (such as from aur or from source). Flatpak has a limitation that prevents GPU Screen Recorder from running faster when playing very heavy games.
 ## How do I apply audio effects, such as noise suppression?
 You have to use external software for that, such as Easy Effects or NoiseTorch.
+## How do I choose which GPU to record/encode with?
+It's not really possible except in some cases. You can only record with the GPU that is displaying the graphics on your monitor.\
+Some laptops have display adapters that connect external monitors directly to the external GPU (if you have one)
+and on Wayland the external GPU will display the graphics for that monitor.
+In that case you can record the monitor with the external GPU by launching GPU Screen Recorder with [prime-run or by setting the DRI_PRIME environment variable](https://wiki.archlinux.org/title/PRIME) depending on your GPU brand.\
+However if you really want to change which GPU you want to record and encode with with then you can instead configure your display server (Xorg or Wayland compositor) to run with that GPU,
+then GPU Screen Recorder will automatically use that same GPU for recording and encoding.
