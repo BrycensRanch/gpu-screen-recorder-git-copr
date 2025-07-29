@@ -1,7 +1,7 @@
 %global snapshot r500.32b9725
 
 # gsr's appdata was split into separate repository.
-%global appdata r7.f09e62a
+%global appdata r8.9fc44f4
 
 Name:           gpu-screen-recorder-gtk
 Version:        5.7.7
