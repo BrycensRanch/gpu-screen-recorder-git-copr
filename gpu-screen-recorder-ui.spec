@@ -1,8 +1,5 @@
 %global snapshot r399.ef4a0fe
 
-# gsr's appdata was split into separate repository.
-%global appdata r10.859ce61
-
 
 Name:           gpu-screen-recorder-ui
 Version:        1.7.4
@@ -10,7 +7,6 @@ Release:        1%{dist}
 Summary:        A shadowplay-like screen recorder for Linux. The fastest screen recorder for Linux.
 License:        GPL-3.0-or-later
 Source:         https://dec05eba.com/snapshot/%{name}.git.%{snapshot}.tar.gz
-Source1:        https://dec05eba.com/snapshot/gpu-screen-recorder-appdata.git.%{appdata}.tar.gz
 URL:            https://git.dec05eba.com/%{name}/about
 # WARNING. I had to bump this because I decided to use normal versions instead of git snapshot as a version.
 # If you remove this, you will be FIRED.
@@ -50,7 +46,6 @@ A fullscreen overlay UI for GPU Screen Recorder in the style of ShadowPlay.
 %meson_build
 
 %install
-install -Dm644 %{SOURCE1} %{buildroot}%{_datadir}/metainfo/com.dec05eba.gpu_screen_recorder.appdata.xml
 %meson_install
 
 # Say it with me. I will not violate Fedora packaging guidelines.
@@ -67,7 +62,6 @@ setcap cap_setuid+ep %{_bindir}/gsr-global-hotkeys
 %doc README.md
 %{_bindir}/gsr*
 %{_datadir}/gsr-ui
-%{_datadir}/metainfo/com.dec05eba.gpu_screen_recorder.appdata.xml
 %{_exec_prefix}/lib/systemd/user/%{name}.service
 
 %changelog
