@@ -67,7 +67,7 @@ Here are some known unofficial packages:
 * Debian/Ubuntu: [Pacstall](https://pacstall.dev/packages/gpu-screen-recorder)
 * Nix: [NixOS wiki](https://wiki.nixos.org/wiki/Gpu-screen-recorder)
 * openSUSE: [openSUSE software repository](https://software.opensuse.org/package/gpu-screen-recorder)
-* Fedora: [Copr](https://copr.fedorainfracloud.org/coprs/brycensranch/gpu-screen-recorder-git/)
+* Fedora, CentOS: [Copr](https://copr.fedorainfracloud.org/coprs/brycensranch/gpu-screen-recorder-git/)
 * OpenMandriva: [gpu-screen-recorder](https://github.com/OpenMandrivaAssociation/gpu-screen-recorder)
 * Solus: [gpu-screen-recorder](https://github.com/getsolus/packages/tree/main/packages/g/gpu-screen-recorder)
 * Nobara: [Nobara wiki](https://wiki.nobaraproject.org/en/general-usage/additional-software/GPU-Screen-Recorder)
@@ -108,7 +108,7 @@ There are also additional dependencies needed at runtime depending on your GPU v
 * xnvctrl (libxnvctrl0, when using the `-oc` option)
 
 ## Optional dependencies
-When compiling GPU Screen Recorder with portal support (`-Dportal=true`, which is enabled by default) these dependencies are also needed:
+When building GPU Screen Recorder with portal support (`-Dportal=true` meson option, which is enabled by default) these dependencies are also needed:
 * libdbus
 * libpipewire (and libspa which is usually part of libpipewire)
 
@@ -159,6 +159,21 @@ If you installed GPU Screen Recorder from AUR or from source and you are running
 It's configured with `$HOME/.config/gpu-screen-recorder.env` (create it if it doesn't exist). You can look at [extra/gpu-screen-recorder.env](https://git.dec05eba.com/gpu-screen-recorder/plain/extra/gpu-screen-recorder.env) to see an example.
 You can see which variables that you can use in the `gpu-screen-recorder.env` file by looking at the `extra/gpu-screen-recorder.service` file. Note that all of the variables are optional, you only have to set the ones that are you interested in.
 You can use the `scripts/save-replay.sh` script to save a replay and by default the systemd service saves videos in `$HOME/Videos`.
+## Run a script when a video is saved
+Run `gpu-screen-recorder` with the `-sc` option to specify a script that should be run when a recording/replay a saved, for example `gpu-screen-recorder -w screen -sc ./script.sh -o video.mp4`.\
+The first argument to the script is the file path to the saved video. The second argument is either "regular" for regular recordings, "replay" for replays or "screenshot" for screenshots.\
+This can be used to for example showing a notification with the name of video or moving a video to a folder based on the name of the game that was recorded.
+## Plugins
+GPU Screen Recorder supports plugins for rendering additional graphics on top of the monitor/window capture. The plugin interface is defined in `plugin/plugin.h` and it gets installed to `gsr/plugin.h` in the systems include directory (usually `/usr/include`).
+An example plugin can be found at `plugin/examples/hello_triangle`.\
+Run `gpu-screen-recorder` with the `-p` option to specify a plugin to load, for example `gpu-screen-recorder -w screen -p ./triangle.so -o video.mp4`.
+`-p` can be specified multiple times to load multiple plugins.\
+Build GPU Screen Recorder with the `-Dplugin_examples=true` meson option to build plugin examples.
+## Smoother recording
+If you record at your monitors refresh rate and enabled vsync in a game then there might be a desync between the game updating a frame and GPU Screen Recorder capturing a frame.
+This is an issue in some games.
+If you experience this issue then you might want to either disable vsync in the game or use the `-fm content` option to sync capture to the content on the screen. For example: `gpu-screen-recorder -w screen -fm content -o video.mp4`.\
+Note that this option is currently only available on X11, or with desktop portal capture on Wayland (`-w portal`).
 # Issues
 ## NVIDIA
 Nvidia drivers have an issue where CUDA breaks if CUDA is running when suspend/hibernation happens, and it remains broken until you reload the nvidia driver. `extra/gsr-nvidia.conf` will be installed by default when you install GPU Screen Recorder and that should fix this issue. If this doesn't fix the issue for you then your distro may use a different path for modprobe files. In that case you have to install that `extra/gsr-nvidia.conf` yourself into that location.
@@ -210,3 +225,7 @@ and on Wayland the external GPU will display the graphics for that monitor.
 In that case you can record the monitor with the external GPU by launching GPU Screen Recorder with [prime-run or by setting the DRI_PRIME environment variable](https://wiki.archlinux.org/title/PRIME) depending on your GPU brand.\
 However if you really want to change which GPU you want to record and encode with with then you can instead configure your display server (Xorg or Wayland compositor) to run with that GPU,
 then GPU Screen Recorder will automatically use that same GPU for recording and encoding.
+## The rotation of the video is incorrect when the monitor is rotated when using desktop portal capture
+This is a bug in kde plasma wayland. When using desktop portal capture and the monitor is rotated and a window is made fullscreen kde plasma wayland will give incorrect rotation to GPU Screen Recorder.
+This also affects other screen recording software such as obs studio.\
+Capture a monitor directly instead to workaround this issue until kde plasma devs fix it, or use another wayland compositor that doesn't have this issue.
