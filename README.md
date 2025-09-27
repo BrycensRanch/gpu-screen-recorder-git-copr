@@ -27,30 +27,6 @@ Supported image formats:
 * PNG
 
 This software works on X11 and Wayland on AMD, Intel and NVIDIA.
-### TEMPORARY ISSUES
-1) Videos are in variable framerate format. Use MPV to play such videos, otherwise you might experience stuttering in the video if you are using a buggy video player. You can try saving the video into a .mkv file instead as some software may have better support for .mkv files (such as kdenlive). You can use the "-fm cfr" option to to use constant framerate mode.
-2) FLAC audio codec is disabled at the moment because of temporary issues.
-### AMD/Intel/Wayland root permission
-When recording a window or when using the `-w portal` option no special user permission is required,
-however when recording a monitor the program needs root permission (to access KMS).\
-This is safe in GPU Screen Recorder as the part that needs root access has been moved to its own small program that only does one thing.\
-For you as a user this only means that if you installed GPU Screen Recorder as a flatpak then a prompt asking for root password will show up once when you start recording.
-# Performance
-On a system with a i5 4690k CPU and a GTX 1080 GPU:\
-When recording Legend of Zelda Breath of the Wild at 4k, fps drops from 30 to 7 when using OBS Studio + nvenc, however when using this screen recorder the fps remains at 30.\
-When recording GTA V at 4k on highest settings, fps drops from 60 to 23 when using obs-nvfbc + nvenc, however when using this screen recorder the fps only drops to 58.\
-GPU Screen Recorder also produces much smoother videos than OBS when GPU utilization is close to 100%, see comparison here: [https://www.youtube.com/watch?v=zfj4sNVLLLg](https://www.youtube.com/watch?v=zfj4sNVLLLg) and [https://www.youtube.com/watch?v=aK67RSZw2ZQ](https://www.youtube.com/watch?v=aK67RSZw2ZQ).\
-GPU Screen Recorder has much better performance than OBS Studio even with version 30.2 that does "zero-copy" recording and encoding, see: [https://www.youtube.com/watch?v=jdroRjibsDw](https://www.youtube.com/watch?v=jdroRjibsDw).\
-It is recommended to save the video to a SSD because of the large file size, which a slow HDD might not be fast enough to handle. Using variable framerate mode (-fm vfr) which is the default is also recommended as this reduces encoding load. Ultra quality is also overkill most of the time, very high (the default) or lower quality is usually enough.\
-Note that for best performance you should close other screen recorders such as OBS Studio when using GPU Screen Recorder even if they are not recording, since they can affect performance even when idle. This is the case with OBS Studio.
-## Note about optimal performance on NVIDIA
-NVIDIA driver has a "feature" (read: bug) where it will downclock memory transfer rate when a program uses cuda (or nvenc, which uses cuda), such as GPU Screen Recorder. To work around this bug, GPU Screen Recorder can overclock your GPU memory transfer rate to it's normal optimal level.\
-To enable overclocking for optimal performance use the `-oc` option when running GPU Screen Recorder. You also need to have "Coolbits" NVIDIA X setting set to "12" to enable overclocking. You can automatically add this option if you run `sudo nvidia-xconfig --cool-bits=12` and then reboot your computer.\
-Note that this only works when Xorg server is running as root, and using this option will only give you a performance boost if the game you are recording is bottlenecked by your GPU.\
-Note! use at your own risk!
-# VRR/G-SYNC
-This should work fine on AMD/Intel X11 or Wayland. On Nvidia X11 G-SYNC only works with the -w screen-direct option, but because of bugs in the Nvidia driver this option is not always recommended.
-For example it can cause your computer to freeze when recording certain games.
 
 # Installation
 If you are running an Arch Linux based distro then you can find gpu screen recorder on aur under the name gpu-screen-recorder (`yay -S gpu-screen-recorder`).\
@@ -88,6 +64,11 @@ These are the dependencies needed to build GPU Screen Recorder:
 * libcap
 * wayland (wayland-client, wayland-egl, wayland-scanner)
 
+## Optional dependencies
+When building GPU Screen Recorder with portal support (`-Dportal=true` meson option, which is enabled by default) these dependencies are also needed:
+* libdbus
+* libpipewire (and libspa which is usually part of libpipewire)
+
 ## Runtime dependencies
 * libglvnd (which provides libgl, libglx and libegl) is needed. Your system needs to support at least OpenGL ES 3.0 (released in 2012)
 
@@ -106,11 +87,6 @@ There are also additional dependencies needed at runtime depending on your GPU v
 * nvenc (libnvidia-encode)
 * nvfbc (libnvidia-fbc1, when recording the screen on x11)
 * xnvctrl (libxnvctrl0, when using the `-oc` option)
-
-## Optional dependencies
-When building GPU Screen Recorder with portal support (`-Dportal=true` meson option, which is enabled by default) these dependencies are also needed:
-* libdbus
-* libpipewire (and libspa which is usually part of libpipewire)
 
 # How to use
 Run `gpu-screen-recorder --help` to see all options and also examples.\
@@ -181,11 +157,37 @@ You have to reboot your computer after installing GPU Screen Recorder for the fi
 # Examples
 Look at the [scripts](https://git.dec05eba.com/gpu-screen-recorder/tree/scripts) directory for script examples. For example if you want to automatically save a recording/replay into a folder with the same name as the game you are recording.
 
+# AMD/Intel/Wayland root permission
+When recording a window or when using the `-w portal` option no special user permission is required,
+however when recording a monitor the program needs root permission (to access KMS).\
+This is safe in GPU Screen Recorder as the part that needs root access has been moved to its own small program that only does one thing.\
+For you as a user this only means that if you installed GPU Screen Recorder as a flatpak then a prompt asking for root password will show up once when you start recording.
+# Performance
+On a system with a i5 4690k CPU and a GTX 1080 GPU:\
+When recording Legend of Zelda Breath of the Wild at 4k, fps drops from 30 to 7 when using OBS Studio + nvenc, however when using this screen recorder the fps remains at 30.\
+When recording GTA V at 4k on highest settings, fps drops from 60 to 23 when using obs-nvfbc + nvenc, however when using this screen recorder the fps only drops to 58.\
+GPU Screen Recorder also produces much smoother videos than OBS when GPU utilization is close to 100%, see comparison here: [https://www.youtube.com/watch?v=zfj4sNVLLLg](https://www.youtube.com/watch?v=zfj4sNVLLLg) and [https://www.youtube.com/watch?v=aK67RSZw2ZQ](https://www.youtube.com/watch?v=aK67RSZw2ZQ).\
+GPU Screen Recorder has much better performance than OBS Studio even with version 30.2 that does "zero-copy" recording and encoding, see: [https://www.youtube.com/watch?v=jdroRjibsDw](https://www.youtube.com/watch?v=jdroRjibsDw).\
+It is recommended to save the video to a SSD because of the large file size, which a slow HDD might not be fast enough to handle. Using variable framerate mode (-fm vfr) which is the default is also recommended as this reduces encoding load. Ultra quality is also overkill most of the time, very high (the default) or lower quality is usually enough.\
+Note that for best performance you should close other screen recorders such as OBS Studio when using GPU Screen Recorder even if they are not recording, since they can affect performance even when idle. This is the case with OBS Studio.
+## Note about optimal performance on NVIDIA
+NVIDIA driver has a "feature" (read: bug) where it will downclock memory transfer rate when a program uses cuda (or nvenc, which uses cuda), such as GPU Screen Recorder. To work around this bug, GPU Screen Recorder can overclock your GPU memory transfer rate to it's normal optimal level.\
+To enable overclocking for optimal performance use the `-oc` option when running GPU Screen Recorder. You also need to have "Coolbits" NVIDIA X setting set to "12" to enable overclocking. You can automatically add this option if you run `sudo nvidia-xconfig --cool-bits=12` and then reboot your computer.\
+Note that this only works when Xorg server is running as root, and using this option will only give you a performance boost if the game you are recording is bottlenecked by your GPU.\
+Note! use at your own risk!
+# VRR/G-SYNC
+This should work fine on AMD/Intel X11 or Wayland. On Nvidia X11 G-SYNC only works with the -w screen-direct option, but because of bugs in the Nvidia driver this option is not always recommended.
+For example it can cause your computer to freeze when recording certain games.
+
 # Reporting bugs, contributing patches, questions or donation
 See [https://git.dec05eba.com/?p=about](https://git.dec05eba.com/?p=about).
 
 # Demo
 [![Click here to watch a demo video on youtube](https://img.youtube.com/vi/n5tm0g01n6A/0.jpg)](https://www.youtube.com/watch?v=n5tm0g01n6A)
+
+# TEMPORARY ISSUES
+1) Videos are in variable framerate format. Use MPV to play such videos, otherwise you might experience stuttering in the video if you are using a buggy video player. You can try saving the video into a .mkv file instead as some software may have better support for .mkv files (such as kdenlive). You can use the "-fm cfr" option to to use constant framerate mode.
+2) FLAC audio codec is disabled at the moment because of temporary issues.
 
 # FAQ
 ## It tells me that my AMD/Intel GPU is not supported or that my GPU doesn't support h264/hevc, but that's not true!
