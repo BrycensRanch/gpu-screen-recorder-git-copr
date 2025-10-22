@@ -33,7 +33,7 @@ If you are running an Arch Linux based distro then you can find gpu screen recor
 If you are running another distro then you can run `sudo ./install.sh`, but you need to manually install the dependencies, as described below.\
 You can also install gpu screen recorder ([the gtk gui version](https://git.dec05eba.com/gpu-screen-recorder-gtk/)) from [flathub](https://flathub.org/apps/details/com.dec05eba.gpu_screen_recorder), which is the easiest method
 to install GPU Screen Recorder on non-arch based distros.\
-If you install GPU Screen Recorder flatpak, which is the gtk gui version then you can still run GPU Screen Recorder command line by using the flatpak command option, for example `flatpak run --command=gpu-screen-recorder com.dec05eba.gpu_screen_recorder -w screen -f 60 -o video.mp4`. Note that if you want to record your monitor on AMD/Intel then you need to install the flatpak system-wide (like so: `flatpak install flathub --system com.dec05eba.gpu_screen_recorder`).
+If you install GPU Screen Recorder flatpak, which is the gtk gui version then you can still run GPU Screen Recorder command line by using the flatpak command option, for example `flatpak run --command=gpu-screen-recorder com.dec05eba.gpu_screen_recorder -w screen -f 60 -o video.mp4`. Note that if you want to record your monitor on AMD/Intel then you need to install the flatpak system-wide (like so: `flatpak install --system com.dec05eba.gpu_screen_recorder`).
 
 ## Unofficial install methods
 The only official ways to install GPU Screen Recorder is either from source, AUR or flathub. Other sources may be out of date and missing features or may not work correctly.\
@@ -202,7 +202,9 @@ Browsers and discord don't support hevc video codec at the moment. Choose h264 v
 Note that websites such as youtube support hevc so there is no need to choose h264 video codec if you intend to upload the video to youtube or if you want to play the video locally or if you intend to
 edit the video with a video editor. Hevc allows for better video quality (especially at lower file sizes) so hevc (or av1) is recommended for source videos.
 ## I get a black bar/distorted colors on the sides in the video
-This is mostly an issue on AMD. For av1 it's a hardware issue, see: https://gitlab.freedesktop.org/mesa/mesa/-/issues/9185. For hevc it's a software issue in the AMD driver that hasn't been fixed yet. This issue happens at certain video resolutions. If you get this issue then a workaround is to record with h264 video codec instead (using the -k h264 option).
+This is mostly an issue on AMD. For av1 it's a hardware issue, see: https://gitlab.freedesktop.org/mesa/mesa/-/issues/9185. For hevc it's a software issue in ffmpeg that was fixed in ffmpeg version 8.\
+If your ffmpeg version is older than 8 then you can use the flatpak version of GPU Screen Recorder which comes with ffmpeg version >= 8.\
+Alternatively you can record with h264 codec (-k h264, which is also the default codec) to workaround this issue.
 ## The video doesn't display or has a green/yellow overlay
 This can happen if your video player is missing the H264/HEVC video codecs. Either install the codecs or use mpv.
 ## I get stutter in the video
@@ -224,7 +226,8 @@ You have to use external software for that, such as Easy Effects or NoiseTorch.
 It's not really possible except in some cases. You can only record with the GPU that is displaying the graphics on your monitor.\
 Some laptops have display adapters that connect external monitors directly to the external GPU (if you have one)
 and on Wayland the external GPU will display the graphics for that monitor.
-In that case you can record the monitor with the external GPU by launching GPU Screen Recorder with [prime-run or by setting the DRI_PRIME environment variable](https://wiki.archlinux.org/title/PRIME) depending on your GPU brand.\
+In that case you can record the monitor with the external GPU by launching GPU Screen Recorder with [prime-run or by setting the DRI_PRIME environment variable](https://wiki.archlinux.org/title/PRIME) depending on your GPU brand.
+Alternatively you can capture with the desktop portal option (`-w portal`), which should allow you to capture any monitor.\
 However if you really want to change which GPU you want to record and encode with with then you can instead configure your display server (Xorg or Wayland compositor) to run with that GPU,
 then GPU Screen Recorder will automatically use that same GPU for recording and encoding.
 ## The rotation of the video is incorrect when the monitor is rotated when using desktop portal capture
