@@ -1,5 +1,8 @@
 ![](https://dec05eba.com/images/gpu_screen_recorder_logo_small.png)
 
+> [!CAUTION]
+> **This COPR hosts RPMs for `GSR*`. Report non-packaging issues upstream [here](https://git.dec05eba.com/?p=about).**
+
 # GPU Screen Recorder
 This is a screen recorder that has minimal impact on system performance by recording your monitor using the GPU only,
 similar to shadowplay on windows. This is the fastest screen recording tool for Linux.
