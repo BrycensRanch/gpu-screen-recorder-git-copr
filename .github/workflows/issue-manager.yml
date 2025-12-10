@@ -62,14 +62,11 @@ jobs:
             echo "$PROMPT"
             echo "EOF"
             } >> "$GITHUB_OUTPUT"
-      - name: Ask ChatGPT for its wisdomy
-        id: chat
-        uses: BorislavStefanov31/chatgpt-action@ChatGPT
+      - name: 'Run Copilot CLI'
+        uses: austenstone/copilot-cli@v2
         with:
-            openai_api_key: ${{ secrets.OPENAI_API_KEY }}
-            message: ${{ steps.set_prompt.outputs.prompt }}
-            temperature: 0.7
-            model: 'gpt-4o'
+          copilot-token: ${{ secrets.COPILOT_TOKEN }}
+          prompt: ${{ steps.set_prompt.outputs.prompt }}
       - name: Call OpenAI API
         id: llm_judgment
         env:
