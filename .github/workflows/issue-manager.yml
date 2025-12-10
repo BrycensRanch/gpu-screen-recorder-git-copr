@@ -57,7 +57,11 @@ jobs:
           
           If 'action' is 'close', the 'certainty_score' MUST be >= 0.95.
           "
-          echo "prompt=$PROMPT" >> $GITHUB_OUTPUT
+            {
+            echo "prompt<<EOF"
+            echo "$PROMPT"
+            echo "EOF"
+            } >> "$GITHUB_OUTPUT"
       - name: Ask ChatGPT for its wisdomy
         id: chat
         uses: BorislavStefanov31/chatgpt-action@ChatGPT
