@@ -43,7 +43,6 @@ body:
     attributes:
       label: Version
       description: What version of GSR are you running?
-      default: "latest"
 
   - type: textarea
     id: logs
