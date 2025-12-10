@@ -36,7 +36,7 @@ jobs:
           echo "prompt=$PROMPT" >> $GITHUB_OUTPUT
       - name: Ask ChatGPT for its wisdomy
         id: chat
-        uses: BorislavStefanov31/chatgpt-action@v1.0.0
+        uses: BorislavStefanov31/chatgpt-action@ChatGPT
         with:
             openai_api_key: ${{ secrets.OPENAI_API_KEY }}
             message: ${{ steps.set_prompt.outputs.prompt }}
