@@ -11,8 +11,9 @@ jobs:
     steps:
       - name: Setup Prompt Issue Context
         id: set_prompt
+        env:
+          ISSUE_BODY: ${{ github.event.issue.body }}
         run: |
-          ISSUE_BODY=$(echo "${{ github.event.issue.body }}" | tr -d '\n')
           
           PROMPT="
           You are an expert issue triage bot for an RPM package maintainer.
