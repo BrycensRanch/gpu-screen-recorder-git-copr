@@ -5,6 +5,7 @@ on:
 
 jobs:
   auto_close_issues:
+    if: github.repository == 'BrycensRanch/gpu-screen-recorder-git-copr'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
