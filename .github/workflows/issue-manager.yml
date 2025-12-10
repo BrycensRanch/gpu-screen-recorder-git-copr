@@ -9,10 +9,33 @@ jobs:
     if: github.repository == 'BrycensRanch/gpu-screen-recorder-git-copr'
 
     steps:
+      - name: Sanitize Issue Text
+        id: sanitize
+        uses: actions/github-script@v7
+        with:
+            script: |
+                function sanitize(str) {
+                    if (!str) return "";
+
+                    str = str.replace(/\0/g, "");
+                    str = str.replace(/\\/g, "\\\\");
+                    str = str.replace(/"/g, '\\"');
+                    str = str.replace(/`/g, "\\`");
+                    str = str.replace(/\r?\n/g, "\\n");
+
+                    return str;
+                }
+
+                const title = sanitize(context.payload.issue.title || "");
+                const body  = sanitize(context.payload.issue.body || "");
+
+                core.setOutput("title", title);
+                core.setOutput("body", body);
       - name: Setup Prompt Issue Context
         id: set_prompt
         env:
-          ISSUE_BODY: ${{ github.event.issue.body }}
+          ISSUE_TITLE: ${{ steps.sanitize.outputs.title }}
+          ISSUE_BODY: ${{ steps.sanitize.outputs.body }}
         run: |
           
           PROMPT="
@@ -22,7 +45,7 @@ jobs:
           
           Analyze the following GitHub Issue content. Determine, with **HIGH** certainty, if the issue is a bug originating from the **upstream 'gpu screen recorder' application** and is *not* related to the packaging process.
           
-          **Issue Title:** ${{ github.event.issue.title }}
+          **Issue Title:** ${ISSUE_TITLE}
           **Issue Body:** ${ISSUE_BODY}
           
           Respond ONLY with a single JSON object with the following structure:
