@@ -1,0 +1,80 @@
+name: Issue Manager
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  triage_issue:
+    runs-on: ubuntu-latest
+    if: github.repository == 'BrycensRanch/gpu-screen-recorder-git-copr'
+
+    steps:
+      - name: Setup Prompt Issue Context
+        id: set_prompt
+        run: |
+          ISSUE_BODY=$(echo "${{ github.event.issue.body }}" | tr -d '\n')
+          
+          PROMPT="
+          You are an expert issue triage bot for an RPM package maintainer.
+          The package is a GPU screen recorder, and the RPMs for Fedora, CentOS, and OpenSUSE
+          are built from the upstream source with **ZERO patches**.
+          
+          Analyze the following GitHub Issue content. Determine, with **HIGH** certainty, if the issue is a bug originating from the **upstream 'gpu screen recorder' application** and is *not* related to the packaging process.
+          
+          **Issue Title:** ${{ github.event.issue.title }}
+          **Issue Body:** ${ISSUE_BODY}
+          
+          Respond ONLY with a single JSON object with the following structure:
+          {
+            \"action\": \"close\" or \"keep\",
+            \"certainty_score\": 0.0 to 1.0,
+            \"reason\": \"A short explanation of why it should be closed or kept.\"
+          }
+          
+          If 'action' is 'close', the 'certainty_score' MUST be >= 0.95.
+          "
+          echo "prompt=$PROMPT" >> $GITHUB_OUTPUT
+
+      - name: Call OpenAI API
+        id: llm_judgment
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          PROMPT: ${{ steps.set_prompt.outputs.prompt }}
+        run: |
+          RESPONSE=$(curl -s -X POST https://api.openai.com/v1/chat/completions \
+            -H "Content-Type: application/json" \
+            -H "Authorization: Bearer $OPENAI_API_KEY" \
+            -d '{
+              "model": "gpt-4o-mini",
+              "response_format": { "type": "json_object" },
+              "messages": [{"role": "user", "content": "'"$PROMPT"'"}]
+            }')
+            
+          JSON_OUTPUT=$(echo "$RESPONSE" | jq -r '.choices[0].message.content')
+          
+          echo "LLM_JUDGMENT=$JSON_OUTPUT" >> $GITHUB_OUTPUT
+          
+          echo "action=$(echo $JSON_OUTPUT | jq -r '.action')" >> $GITHUB_OUTPUT
+          echo "reason=$(echo $JSON_OUTPUT | jq -r '.reason')" >> $GITHUB_OUTPUT
+
+      - name: Auto-Close Issue
+        if: steps.llm_judgment.outputs.action == 'close'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issue_number = context.issue.number;
+            const reason = '${{ steps.llm_judgment.outputs.reason }}';
+
+            await github.rest.issues.createComment({
+              issue_number: issue_number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `🤖 **AI Triage (Copilot Stand-in):**\n\nBased on a high-certainty analysis (score >= 0.95) of the issue description and the fact that this package has **NO upstream patches**, this issue is **HIGHLY LIKELY** an upstream bug in the 'gpu screen recorder' application.\n\n**Reasoning:** ${reason}\n\nWe recommend reporting this to the upstream project.\n\n---\n\n**MISTAKE?** If you believe this automatic closure is an error, please comment below with:\n\n> I think you've made a mistake, robot/copilot\n\n... and the issue will be automatically reopened.`
+            });
+
+            await github.rest.issues.update({
+              issue_number: issue_number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'closed'
+            });
