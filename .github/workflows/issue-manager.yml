@@ -34,23 +34,21 @@ jobs:
           If 'action' is 'close', the 'certainty_score' MUST be >= 0.95.
           "
           echo "prompt=$PROMPT" >> $GITHUB_OUTPUT
-
+      - name: Ask ChatGPT for its wisdomy
+        id: chat
+        uses: BorislavStefanov31/chatgpt-action@v1.0.0
+        with:
+            openai_api_key: ${{ secrets.OPENAI_API_KEY }}
+            message: ${{ steps.set_prompt.outputs.prompt }}
+            temperature: 0.7
+            model: 'gpt-4o'
       - name: Call OpenAI API
         id: llm_judgment
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           PROMPT: ${{ steps.set_prompt.outputs.prompt }}
         run: |
-          RESPONSE=$(curl -s -X POST https://api.openai.com/v1/chat/completions \
-            -H "Content-Type: application/json" \
-            -H "Authorization: Bearer $OPENAI_API_KEY" \
-            -d '{
-              "model": "gpt-4o-mini",
-              "response_format": { "type": "json_object" },
-              "messages": [{"role": "user", "content": "'"$PROMPT"'"}]
-            }')
-            
-          JSON_OUTPUT=$(echo "$RESPONSE" | jq -r '.choices[0].message.content')
+          JSON_OUTPUT=$(echo "${{ steps.chat.outputs.response_message }}" | jq -r '.choices[0].message.content')
           
           echo "LLM_JUDGMENT=$JSON_OUTPUT" >> $GITHUB_OUTPUT
           
