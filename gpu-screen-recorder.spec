@@ -66,8 +66,8 @@ setcap cap_sys_admin+ep %{_bindir}/gsr-kms-server
 %{_includedir}/gsr/plugin.h
 /usr/lib/systemd/user/%{name}.service
 /usr/lib/modprobe.d/gsr-nvidia.conf
-%{_mandir}/man1/gsr-kms-server.1.gz
-%{_mandir}/man1/gpu-screen-recorder.1.gz
+%{_mandir}/man1/gsr-kms-server.1*
+%{_mandir}/man1/gpu-screen-recorder.1*
 
 %changelog
 * Tue Mar 18 2025 Brycen G <brycengranville@outlook.com> - 5.3.3-1
