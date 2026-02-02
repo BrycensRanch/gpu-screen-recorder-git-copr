@@ -61,6 +61,7 @@ setcap cap_sys_admin+ep %{_bindir}/gsr-kms-server
 %files
 %license LICENSE
 %doc README.md
+%{_datadir}/gpu-screen-recorder
 %{_bindir}/gpu-screen-recorder
 %{_bindir}/gsr-kms-server
 %{_includedir}/gsr/plugin.h
