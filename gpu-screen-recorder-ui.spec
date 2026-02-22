@@ -28,12 +28,14 @@ BuildRequires:  pkgconfig(wayland-scanner)
 BuildRequires:  pkgconfig(wayland-client)
 BuildRequires:  pkgconfig(libdrm)
 BuildRequires:  pkgconfig(dbus-1)
+BuildRequires:  (update-desktop-files or desktop-file-utils)
 BuildRequires:  kernel-headers
 Requires:       gpu-screen-recorder
 Requires:       gpu-screen-recorder-notification
 Requires:       (google-noto-sans-fonts or noto-sans)
 Requires(post): libcap
 Requires:       dbus
+Requires(post): (update-desktop-files or desktop-file-utils)
 
 %description
 A fullscreen overlay UI for GPU Screen Recorder in the style of ShadowPlay.
