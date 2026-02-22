@@ -32,6 +32,7 @@ Requires:       gpu-screen-recorder
 Requires:       gpu-screen-recorder-notification
 Requires:       (google-noto-sans-fonts or noto-sans)
 Requires(post): libcap
+Requires:       pkgconfig(dbus-1)
 
 %description
 A fullscreen overlay UI for GPU Screen Recorder in the style of ShadowPlay.
