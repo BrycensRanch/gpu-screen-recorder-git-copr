@@ -12,7 +12,7 @@ BuildRequires:  meson >= 0.56
 BuildRequires:  pkgconfig(libadwaita-1) >= 1.8
 BuildRequires:  pkgconfig(x11)
 BuildRequires:  (update-desktop-files or desktop-file-utils)
-BuildRequires:  (libappstream-glib or lib64appstream-glib8)
+BuildRequires:  (libappstream-glib or lib64appstream-glib8 or libappstream-glib8)
 
 Requires:       gpu-screen-recorder
 Conflicts:      gpu-screen-recorder-gtk
