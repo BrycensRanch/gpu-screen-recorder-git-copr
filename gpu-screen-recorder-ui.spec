@@ -1,9 +1,9 @@
-%global snapshot r548.83aa20a
+%global snapshot r723.dfcb262
 
 
 Name:           gpu-screen-recorder-ui
-Version:        1.10.8
-Release:        3%{dist}
+Version:        1.13.5
+Release:        1%{dist}
 Summary:        A shadowplay-like screen recorder for Linux. The fastest screen recorder for Linux.
 License:        GPL-3.0-or-later
 Source:         https://dec05eba.com/snapshot/%{name}.git.%{snapshot}.tar.gz
@@ -68,7 +68,8 @@ setcap cap_setuid+ep %{_bindir}/gsr-global-hotkeys
 %{_datadir}/gsr-ui
 %{_datadir}/applications/gpu-screen-recorder.desktop
 %{_datadir}/icons/hicolor/*/*/gpu-screen-recorder.png
-%{_exec_prefix}/lib/systemd/user/%{name}.service
+%{_mandir}/man1/gsr-ui.1*
+%{_mandir}/man1/gsr-ui-cli.1*
 
 %changelog
 * Fri Dec 13 2024 Brycen G <brycengranville@outlook.com> - r142.4c83972
