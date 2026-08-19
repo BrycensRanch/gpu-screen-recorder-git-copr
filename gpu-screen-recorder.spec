@@ -1,8 +1,8 @@
-%global snapshot r1303.7553404
+%global snapshot r1478.7f4662f
 
 Name:           gpu-screen-recorder
-Version:        5.12.5
-Release:        2%{dist}
+Version:        6.0.1
+Release:        1%{dist}
 Summary:        A shadowplay-like screen recorder for Linux. The fastest screen recorder for Linux.
 # WARNING. I had to bump this because I decided to use normal versions instead of git snapshot as a version.
 # If you remove this, you will be FIRED.
@@ -64,14 +64,19 @@ setcap cap_sys_admin+ep %{_bindir}/gsr-kms-server
 %{_datadir}/gpu-screen-recorder
 %{_bindir}/gpu-screen-recorder
 %{_bindir}/gsr-kms-server
+%{_bindir}/gsr-cli
 %{_includedir}/gsr/plugin.h
 /usr/lib/systemd/user/%{name}.service
 /usr/lib/modprobe.d/gsr-nvidia.conf
 %{_mandir}/man1/gsr-kms-server.1*
 %{_mandir}/man1/gpu-screen-recorder.1*
+%{_mandir}/man1/gsr-cli.1*
+
 
 %changelog
-* Tue Mar 18 2025 Brycen G <brycengranville@outlook.com> - 5.3.3-1
+* Tue Aug 18 2026 Brycen G <brycengranville@outlook.com> - 6.0.1-1
+- Update to 6.0.1
+* Thu Sep 05 2024 Brycen G <brycengranville@outlook.com> - 5.3.3-1
 - Update to 5.3.3
 * Thu Sep 05 2024 Brycen G <brycengranville@outlook.com> - 4.3.3-3
 - Update to 4.3.3
