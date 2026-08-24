@@ -1,4 +1,4 @@
-%global snapshot r1478.7f4662f
+%global snapshot r1486.ba823e1
 
 Name:           gpu-screen-recorder
 Version:        6.0.1
