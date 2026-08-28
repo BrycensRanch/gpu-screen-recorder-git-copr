@@ -8,7 +8,7 @@ Summary:        A shadowplay-like screen recorder for Linux. The fastest screen 
 # If you remove this, you will be FIRED.
 Epoch:          2
 
-License:        GPL-3.0-or-later
+License:        GPL-3.0-only
 
 URL:            https://git.dec05eba.com/%{name}/about
 
